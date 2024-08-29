@@ -69,14 +69,6 @@ class SE3CNN(nn.Module):
             print(f'2nd Conv -> Input: {res_type} || Output: {layer_types[i+1][0]}')
             print('-------------------------------------------------------------------------------\n')
 
-            #blocks.append(
-            #    SequentialModule(
-            #        R3Conv(res_type, layer_types[i+1][0], kernel_size=3, padding=1, stride=1, bias=False, initialize=False),
-            #        IIDBatchNorm3d(layer_types[i+1][0], affine=True),
-            #        FourierELU(self.gs, layer_types[i+1][0].size, irreps=so3.bl_irreps(L), inplace=True, **grid)
-            #    )
-            #)
-
         # For pooling, we map the features to a spherical representation (bandlimited to freq 2)
         # Then, we apply pointwise ELU over a number of samples on the sphere and, finally, compute the average
         # # (i.e. recover only the frequency 0 component of the output features)
@@ -186,8 +178,8 @@ if __name__ == '__main__':
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(f'Using device: {device}')
     # Paths to the training and testing directories
-    train_directory = './../../escnn_trial_data/67files/train/'
-    test_directory = './../../escnn_trial_data/67files/test/'
+    train_directory = './../../escnn_trial_data/67files/train_2/'
+    test_directory = './../../escnn_trial_data/67files/test_2/'
 
     # Build and initialize the SE(3) equivariant model
     model = SE3CNN(pool='snub_cube', init='he').to(device)
